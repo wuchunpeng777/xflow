@@ -1,0 +1,25 @@
+{
+  "name": "xflow",
+  "version": "0.1.0",
+  "description": "Install the xflow skill for spec-driven AI workflows.",
+  "bin": {
+    "xflow": "bin/xflow.js"
+  },
+  "files": [
+    "bin/",
+    "templates/skills/xflow/"
+  ],
+  "keywords": [
+    "cursor",
+    "claude",
+    "claude-code",
+    "skill",
+    "ai",
+    "workflow",
+    "spec"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,55 @@
+# xflow
+
+xflow installs a generic AI skill for spec-driven workflows.
+
+## Install Into A Project
+
+Run this in the project where you want to use xflow:
+
+```bash
+npx xflow init
+```
+
+Choose a specific target:
+
+```bash
+npx xflow init --target cursor
+npx xflow init --target claude
+npx xflow init --target both
+```
+
+Or overwrite existing skill files without prompts:
+
+```bash
+npx xflow init --target cursor --force
+```
+
+For Cursor, the installer creates:
+
+```text
+.cursor/
+  skills/
+    xflow/
+      SKILL.md
+      SKILL.zh-CN.md
+```
+
+For Claude Code, the installer creates:
+
+```text
+.claude/
+  skills/
+    xflow/
+      SKILL.md
+      SKILL.zh-CN.md
+```
+
+It does not pre-generate `.xflow/`. xflow creates `.xflow/` files only when a command needs them.
+
+## Commands
+
+- `/xflow:start <feature-name>`: start a new feature spec.
+- `/xflow:complete <feature-name>`: complete a feature and update its release file.
+- `/xflow:abandon <feature-name>`: abandon a feature and write an abandoned record.
+- `/xflow:learn <topic>`: extract durable project knowledge from current work.
+- `/xflow:record <content>`: directly record content into AI context.
