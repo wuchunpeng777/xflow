@@ -29,10 +29,10 @@ Accept these forms as equivalent:
    - Continue the previous spec.
    - Use a different new feature name.
 5. Create the task spec from the template only after the name is confirmed.
-6. Fill the initial task spec with what is already known about the goal, background, requirements, forbidden changes, and acceptance criteria.
+6. Fill the initial task spec with what is already known about the goal, background, requirements, and forbidden changes.
 7. After creating the task spec, automatically enter a planning-style clarification phase:
    - Summarize what is known from the user's request and the current spec.
-   - Ask focused questions for missing requirements, constraints, edge cases, acceptance criteria, and non-goals.
+   - Ask focused questions for missing requirements, constraints, edge cases, and non-goals.
    - Update the task spec after the user answers.
    - Continue until the spec is specific enough to guide implementation.
 8. Do not start coding after `xflow-start` unless the user explicitly asks to begin implementation.
@@ -61,11 +61,6 @@ Accept these forms as equivalent:
 
 - 必须遵守：
 - 不允许做：
-
-## 验收
-
-- 功能正确：
-- 性能 OK：
 
 ## 待确认问题
 
