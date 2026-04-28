@@ -21,20 +21,22 @@ Accept these forms as equivalent:
 
 ## Workflow
 
-1. Read the active task spec from `.xflow/tasks/feature-name.md`.
+1. Read the active task spec from `.xflow/tasks/<feature-name>.md`, using the exact `<feature-name>` from the user's complete command.
 2. Inspect code and Git state as the source of truth.
-3. Ensure `.xflow/releases/` exists.
-4. Use `.xflow/releases/feature-name.md` as the release file path.
-5. If the release file does not exist, create it from the Release File Template and add the current release entry.
-6. If the release file already exists, prepend the current release entry to the top of the release log, keeping older entries below it.
-7. Each release entry must include background, changes, impact, and risks.
-8. Delete the completed task spec unless the user asks to keep it.
+3. If the task spec, code, or Git state is not enough to write background, changes, impact, and risks, ask focused clarification questions before writing the release entry.
+4. Ensure `.xflow/releases/` exists.
+5. Use `.xflow/releases/<feature-name>.md` as the release file path.
+6. If the release file does not exist, create it from the Release File Template and add the current release entry.
+7. If the release file already exists, prepend the current release entry to the top of the release log, keeping older entries below it.
+8. Each release entry must include background, changes, impact, and risks.
+9. Delete the completed task spec unless the user asks to keep it.
 
 ## Naming
 
-- Task spec: `.xflow/tasks/readable-feature-name.md`
-- Release file: `.xflow/releases/readable-feature-name.md`
-- Use lowercase kebab-case for file names.
+- Task spec: `.xflow/tasks/<feature-name>.md`
+- Release file: `.xflow/releases/<feature-name>.md`
+- Preserve the user's command name exactly, including language, spelling, casing, and separators.
+- Do not translate, summarize, lowercase, kebab-case, or otherwise rewrite the name.
 
 ## Release File Template
 

@@ -25,8 +25,9 @@ Accept these forms as equivalent:
 2. Ensure `.xflow/` exists.
 3. If `.xflow/ai-context.md` exists, read it before editing. If it does not exist, create it from the AI Context Template.
 4. Add or merge the content into the most relevant section of `.xflow/ai-context.md`.
-5. Preserve the user's meaning, but keep the wording concise and reusable.
-6. Do not create or modify task specs or release notes.
+5. If the content is ambiguous or its target section is unclear, ask focused clarification questions before recording it.
+6. Preserve the user's meaning, but keep the wording concise and reusable.
+7. Do not create or modify task specs or release notes.
 
 ## AI Context Template
 

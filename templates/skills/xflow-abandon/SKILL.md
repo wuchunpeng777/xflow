@@ -21,18 +21,20 @@ Accept these forms as equivalent:
 
 ## Workflow
 
-1. Read the active task spec from `.xflow/tasks/feature-name.md`.
+1. Read the active task spec from `.xflow/tasks/<feature-name>.md`, using the exact `<feature-name>` from the user's abandon command.
 2. Ensure `.xflow/history/` exists.
-3. Create `.xflow/history/YYYY-MM-DD-abandoned-feature-name.md` from the Abandoned Note Template.
-4. Include current state, known partial changes, rollback needs, and future restart notes.
-5. Delete the task spec unless the user asks to keep it.
-6. Do not revert code unless the user explicitly requests it.
+3. If the user's reason for abandoning, rollback preference, or future restart guidance is unclear, ask focused clarification questions before writing the abandoned note.
+4. Create `.xflow/history/YYYY-MM-DD-abandoned-<feature-name>.md` from the Abandoned Note Template.
+5. Include current state, known partial changes, rollback needs, and future restart notes.
+6. Delete the task spec unless the user asks to keep it.
+7. Do not revert code unless the user explicitly requests it.
 
 ## Naming
 
-- Task spec: `.xflow/tasks/readable-feature-name.md`
-- Abandoned note: `.xflow/history/YYYY-MM-DD-abandoned-readable-feature-name.md`
-- Use lowercase kebab-case for file names.
+- Task spec: `.xflow/tasks/<feature-name>.md`
+- Abandoned note: `.xflow/history/YYYY-MM-DD-abandoned-<feature-name>.md`
+- Preserve the user's command name exactly, including language, spelling, casing, and separators.
+- Do not translate, summarize, lowercase, kebab-case, or otherwise rewrite the name.
 
 ## Abandoned Note Template
 

@@ -23,19 +23,26 @@ Accept these forms as equivalent:
 
 1. If `.xflow/ai-context.md` exists, read it. If it does not exist, continue and create it only when durable project knowledge must be stored.
 2. Ensure `.xflow/tasks/` exists.
-3. Use `.xflow/tasks/feature-name.md` as the task spec path.
+3. Use the exact `<feature-name>` provided in the user's start command as the task spec name and path segment: `.xflow/tasks/<feature-name>.md`.
 4. If a task spec with the same name already exists, stop and ask the user to choose one option:
    - Abandon the previous spec and create a new one with the same name.
    - Continue the previous spec.
    - Use a different new feature name.
 5. Create the task spec from the template only after the name is confirmed.
-6. Fill the task spec with goal, background, requirements, forbidden changes, and acceptance criteria.
-7. Ask for missing requirements before coding if the scope is unclear.
+6. Fill the initial task spec with what is already known about the goal, background, requirements, forbidden changes, and acceptance criteria.
+7. After creating the task spec, automatically enter a planning-style clarification phase:
+   - Summarize what is known from the user's request and the current spec.
+   - Ask focused questions for missing requirements, constraints, edge cases, acceptance criteria, and non-goals.
+   - Update the task spec after the user answers.
+   - Continue until the spec is specific enough to guide implementation.
+8. Do not start coding after `xflow-start` unless the user explicitly asks to begin implementation.
 
 ## Naming
 
-- Task spec: `.xflow/tasks/readable-feature-name.md`
-- Use lowercase kebab-case for file names.
+- Task spec: `.xflow/tasks/<feature-name>.md`
+- Preserve the user's command name exactly, including language, spelling, casing, and separators.
+- Do not translate, summarize, lowercase, kebab-case, or otherwise rewrite the name.
+- If the provided name contains characters that are unsafe for file paths, stop and ask the user for a valid replacement name.
 
 ## Task Template
 
@@ -59,6 +66,10 @@ Accept these forms as equivalent:
 
 - 功能正确：
 - 性能 OK：
+
+## 待确认问题
+
+- 
 ```
 
 ## Principles

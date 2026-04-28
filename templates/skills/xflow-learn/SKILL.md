@@ -23,9 +23,10 @@ Accept these forms as equivalent:
 
 1. If `.xflow/ai-context.md` exists, read it.
 2. Extract only stable, reusable project facts from the current work.
-3. Ensure `.xflow/` exists.
-4. Create or update `.xflow/ai-context.md`.
-5. Do not add temporary task details, speculation, or one-off decisions.
+3. If it is unclear whether something is durable project knowledge, ask focused clarification questions before writing it.
+4. Ensure `.xflow/` exists.
+5. Create or update `.xflow/ai-context.md`.
+6. Do not add temporary task details, speculation, or one-off decisions.
 
 ## AI Context Template
 
