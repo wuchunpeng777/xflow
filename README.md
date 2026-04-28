@@ -24,28 +24,6 @@ Or overwrite existing skill files without prompts:
 npx xflow init --target cursor --force
 ```
 
-For Cursor, the installer creates:
-
-```text
-.cursor/
-  skills/
-    xflow/
-      SKILL.md
-      SKILL.zh-CN.md
-```
-
-For Claude Code, the installer creates:
-
-```text
-.claude/
-  skills/
-    xflow/
-      SKILL.md
-      SKILL.zh-CN.md
-```
-
-It does not pre-generate `.xflow/`. xflow creates `.xflow/` files only when a command needs them.
-
 ## Commands
 
 - `/xflow:start <feature-name>`: start a new feature spec.
