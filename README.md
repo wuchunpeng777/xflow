@@ -27,6 +27,7 @@ npx xflow init --target cursor --force
 ## Commands
 
 - `/xflow-start <feature-name>`: start a new feature spec.
+- `/xflow-do <feature-name-or-file>` / `/xflow:do <feature-name-or-file>`: execute the task list in a feature spec.
 - `/xflow-complete <feature-name>`: complete a feature and update its release file.
 - `/xflow-abandon <feature-name>`: abandon a feature and write an abandoned record.
 - `/xflow-learn <topic>`: extract durable project knowledge from current work.
@@ -35,6 +36,7 @@ npx xflow init --target cursor --force
 Each command is installed as a separate skill:
 
 - `xflow-start`
+- `xflow-do`
 - `xflow-complete`
 - `xflow-abandon`
 - `xflow-learn`

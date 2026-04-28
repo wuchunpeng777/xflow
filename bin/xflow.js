@@ -8,6 +8,7 @@ const packageRoot = path.resolve(__dirname, "..");
 const skillSourceRoot = path.join(packageRoot, "templates", "skills");
 const skillNames = [
   "xflow-start",
+  "xflow-do",
   "xflow-complete",
   "xflow-abandon",
   "xflow-learn",
