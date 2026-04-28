@@ -5,10 +5,17 @@ const path = require("path");
 const readline = require("readline");
 
 const packageRoot = path.resolve(__dirname, "..");
-const skillSourceDir = path.join(packageRoot, "templates", "skills", "xflow");
-const targetDirs = {
-  cursor: path.join(process.cwd(), ".cursor", "skills", "xflow"),
-  claude: path.join(process.cwd(), ".claude", "skills", "xflow"),
+const skillSourceRoot = path.join(packageRoot, "templates", "skills");
+const skillNames = [
+  "xflow-start",
+  "xflow-complete",
+  "xflow-abandon",
+  "xflow-learn",
+  "xflow-record",
+];
+const targetRoots = {
+  cursor: path.join(process.cwd(), ".cursor", "skills"),
+  claude: path.join(process.cwd(), ".claude", "skills"),
 };
 
 function printHelp() {
@@ -19,7 +26,7 @@ Usage:
   xflow help
 
 Commands:
-  init     Install the xflow skill into the current project.
+  init     Install xflow command skills into the current project.
   help     Show this help message.
 
 Options:
@@ -111,8 +118,8 @@ function expandTargets(target) {
 }
 
 async function init(options) {
-  if (!fs.existsSync(skillSourceDir)) {
-    console.error(`xflow skill source not found: ${skillSourceDir}`);
+  if (!fs.existsSync(skillSourceRoot)) {
+    console.error(`xflow skill source not found: ${skillSourceRoot}`);
     process.exitCode = 1;
     return;
   }
@@ -121,32 +128,44 @@ async function init(options) {
   const installTargets = expandTargets(await resolveTarget(options.target));
 
   for (const installTarget of installTargets) {
-    const targetSkillDir = targetDirs[installTarget];
-    fs.mkdirSync(targetSkillDir, { recursive: true });
+    const targetRoot = targetRoots[installTarget];
 
-    for (const file of files) {
-      const source = path.join(skillSourceDir, file);
-      const target = path.join(targetSkillDir, file);
-      const relativeTarget = path.relative(process.cwd(), target);
+    for (const skillName of skillNames) {
+      const sourceSkillDir = path.join(skillSourceRoot, skillName);
+      const targetSkillDir = path.join(targetRoot, skillName);
 
-      if (fs.existsSync(target) && !options.force) {
-        const choice = await confirmOverwrite(relativeTarget);
-        if (choice === "abort") {
-          console.log("xflow init aborted.");
-          return;
-        }
-        if (choice === "skip") {
-          console.log(`Skipped ${relativeTarget}`);
-          continue;
-        }
+      if (!fs.existsSync(sourceSkillDir)) {
+        console.error(`xflow skill source not found: ${sourceSkillDir}`);
+        process.exitCode = 1;
+        return;
       }
 
-      copyFile(source, target);
-      console.log(`Installed ${relativeTarget}`);
+      fs.mkdirSync(targetSkillDir, { recursive: true });
+
+      for (const file of files) {
+        const source = path.join(sourceSkillDir, file);
+        const target = path.join(targetSkillDir, file);
+        const relativeTarget = path.relative(process.cwd(), target);
+
+        if (fs.existsSync(target) && !options.force) {
+          const choice = await confirmOverwrite(relativeTarget);
+          if (choice === "abort") {
+            console.log("xflow init aborted.");
+            return;
+          }
+          if (choice === "skip") {
+            console.log(`Skipped ${relativeTarget}`);
+            continue;
+          }
+        }
+
+        copyFile(source, target);
+        console.log(`Installed ${relativeTarget}`);
+      }
     }
   }
 
-  console.log("\nxflow installed. Use commands like /xflow:start in your AI tool.");
+  console.log("\nxflow command skills installed. Use commands like /xflow-start in your AI tool.");
   console.log("No .xflow/ directory was created. xflow creates it only when needed.");
 }
 
