@@ -40,11 +40,7 @@ npx xflow init --target cursor,claude,codex
 npx xflow init --target all
 ```
 
-如需跳过确认并覆盖已有技能文件：
-
-```bash
-npx xflow init --target cursor --force
-```
+如果目标位置已存在 xflow 技能文件，安装时会自动覆盖，不会额外询问。
 
 ## Skill 命令
 

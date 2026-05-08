@@ -30,7 +30,7 @@ function printHelp() {
   console.log(`xflow
 
 Usage:
-  xflow init [--target cursor|claude|codex|all|cursor,claude] [--force]
+  xflow init [--target cursor|claude|codex|all|cursor,claude]
   xflow help
 
 Commands:
@@ -40,41 +40,12 @@ Commands:
 Options:
   --target  Install target(s). Use comma-separated values for multiple targets.
             Without --target, use an interactive multi-select prompt.
-  --force   Overwrite existing xflow skill files without prompting.
 `);
-}
-
-function ask(question) {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-
-  return new Promise((resolve) => {
-    rl.question(question, (answer) => {
-      rl.close();
-      resolve(answer.trim().toLowerCase());
-    });
-  });
 }
 
 function copyFile(source, target) {
   fs.mkdirSync(path.dirname(target), { recursive: true });
   fs.copyFileSync(source, target);
-}
-
-async function confirmOverwrite(relativePath) {
-  while (true) {
-    const answer = await ask(
-      `${relativePath} already exists. Overwrite, skip, or abort? [o/s/a] `
-    );
-
-    if (["o", "overwrite"].includes(answer)) return "overwrite";
-    if (["s", "skip"].includes(answer)) return "skip";
-    if (["a", "abort"].includes(answer)) return "abort";
-
-    console.log("Please enter o, s, or a.");
-  }
 }
 
 function getOptionValue(args, name) {
@@ -132,6 +103,7 @@ function selectTargets(defaultTargets) {
     function cleanup() {
       input.off("keypress", onKeypress);
       if (input.isTTY) input.setRawMode(false);
+      input.pause();
       output.write("\x1b[?25h");
     }
 
@@ -264,35 +236,19 @@ async function init(options) {
       for (const file of files) {
         const source = path.join(sourceSkillDir, file);
         const target = path.join(targetSkillDir, file);
-        const relativeTarget = path.relative(process.cwd(), target);
-
-        if (fs.existsSync(target) && !options.force) {
-          const choice = await confirmOverwrite(relativeTarget);
-          if (choice === "abort") {
-            console.log("xflow init aborted.");
-            return;
-          }
-          if (choice === "skip") {
-            console.log(`Skipped ${relativeTarget}`);
-            continue;
-          }
-        }
 
         copyFile(source, target);
-        console.log(`Installed ${relativeTarget}`);
       }
     }
   }
 
-  console.log("\nxflow command skills installed. Use commands like /xflow-start in your AI tool.");
-  console.log("No .xflow/ directory was created. xflow creates it only when needed.");
+  console.log("xflow command skills installed successfully.");
 }
 
 async function main() {
   const args = process.argv.slice(2);
   const command = args[0];
   const options = {
-    force: args.includes("--force"),
     target: getOptionValue(args, "--target"),
   };
 

@@ -40,11 +40,7 @@ npx xflow init --target cursor,claude,codex
 npx xflow init --target all
 ```
 
-Or overwrite existing skill files without prompts:
-
-```bash
-npx xflow init --target cursor --force
-```
+If xflow skill files already exist in the target location, installation overwrites them automatically without prompting.
 
 ## Skill Commands
 
