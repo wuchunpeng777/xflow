@@ -30,6 +30,7 @@ Accept these forms as equivalent:
 7. If the release file already exists, prepend the current release entry to the top of the release log, keeping older entries below it.
 8. Each release entry must include background, changes, impact, and risks.
 9. Delete the completed task spec unless the user asks to keep it.
+10. After complete finishes, automatically ask the user whether to run learn to capture durable project knowledge. Only if the user confirms, continue into the xflow-learn workflow using the user's topic or the current feature name.
 
 ## Naming
 

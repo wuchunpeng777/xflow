@@ -30,6 +30,7 @@ description: 完成一个 xflow 功能并写入 Release Note。当用户调用 /
 7. 如果 Release 文件已经存在，把本次 Release 条目追加到 Release Log 顶部，旧条目保留在下方。
 8. 每次 Release 条目必须包含背景、改动、影响和风险。
 9. 除非用户要求保留，否则删除已完成的任务 Spec。
+10. complete 完成后，自动询问用户是否需要执行 learn 来沉淀长期项目知识。只有用户确认后，才使用用户给定的主题或本次功能名进入 xflow-learn 流程。
 
 ## 命名
 
