@@ -17,13 +17,20 @@ const skillNames = [
 const targetRoots = {
   cursor: path.join(process.cwd(), ".cursor", "skills"),
   claude: path.join(process.cwd(), ".claude", "skills"),
+  codex: path.join(process.cwd(), ".codex", "skills"),
+};
+const targetNames = Object.keys(targetRoots);
+const targetLabels = {
+  cursor: "Cursor",
+  claude: "Claude Code",
+  codex: "Codex",
 };
 
 function printHelp() {
   console.log(`xflow
 
 Usage:
-  xflow init [--target cursor|claude|both] [--force]
+  xflow init [--target cursor|claude|codex|all|cursor,claude] [--force]
   xflow help
 
 Commands:
@@ -31,7 +38,8 @@ Commands:
   help     Show this help message.
 
 Options:
-  --target  Install target. Defaults to auto-detect, then prompts when possible.
+  --target  Install target(s). Use comma-separated values for multiple targets.
+            Without --target, use an interactive multi-select prompt.
   --force   Overwrite existing xflow skill files without prompting.
 `);
 }
@@ -80,42 +88,151 @@ function getOptionValue(args, name) {
   return undefined;
 }
 
-function normalizeTarget(target) {
-  if (!target) return undefined;
+function normalizeTargetName(target) {
   const value = target.toLowerCase();
-  if (["cursor", "claude", "both"].includes(value)) return value;
+  if (value === "claude-code" || value === "claudecode") return "claude";
+  if (targetNames.includes(value)) return value;
   return undefined;
 }
 
-async function resolveTarget(target) {
-  const normalized = normalizeTarget(target);
-  if (normalized) return normalized;
+function parseTargets(target) {
+  if (!target) return undefined;
 
-  const hasCursor = fs.existsSync(path.join(process.cwd(), ".cursor"));
-  const hasClaude = fs.existsSync(path.join(process.cwd(), ".claude"));
+  const normalized = target.trim().toLowerCase();
+  if (normalized === "all") return targetNames;
 
-  if (hasCursor && !hasClaude) return "cursor";
-  if (hasClaude && !hasCursor) return "claude";
+  const targets = [];
+  const parts = normalized.split(/[,+\s]+/).filter(Boolean);
 
-  if (!process.stdin.isTTY) return "both";
-
-  while (true) {
-    const answer = await ask(
-      "Install xflow for Cursor, Claude Code, or both? [c/l/b] "
-    );
-
-    if (["c", "cursor"].includes(answer)) return "cursor";
-    if (["l", "claude", "claude code", "claudecode"].includes(answer)) {
-      return "claude";
-    }
-    if (["b", "both"].includes(answer)) return "both";
-
-    console.log("Please enter c, l, or b.");
+  for (const part of parts) {
+    const targetName = normalizeTargetName(part);
+    if (!targetName) return undefined;
+    if (!targets.includes(targetName)) targets.push(targetName);
   }
+
+  return targets.length > 0 ? targets : undefined;
 }
 
-function expandTargets(target) {
-  return target === "both" ? ["cursor", "claude"] : [target];
+function getDetectedTargets() {
+  return targetNames.filter((targetName) => {
+    const targetRoot = targetRoots[targetName];
+    return fs.existsSync(path.dirname(targetRoot));
+  });
+}
+
+function selectTargets(defaultTargets) {
+  const input = process.stdin;
+  const output = process.stdout;
+  const selectedTargets = new Set(defaultTargets);
+  let activeIndex = 0;
+  let renderedLines = 0;
+  let warning = "";
+
+  return new Promise((resolve) => {
+    function cleanup() {
+      input.off("keypress", onKeypress);
+      if (input.isTTY) input.setRawMode(false);
+      output.write("\x1b[?25h");
+    }
+
+    function render() {
+      if (renderedLines > 0) {
+        output.write(`\x1b[${renderedLines}A`);
+        output.write("\x1b[0J");
+      }
+
+      const lines = [
+        "Select xflow install targets:",
+        "Use Up/Down to move, Space to select, Enter to install.",
+        "",
+        ...targetNames.map((targetName, index) => {
+          const cursor = index === activeIndex ? ">" : " ";
+          const checked = selectedTargets.has(targetName) ? "[x]" : "[ ]";
+          return `${cursor} ${checked} ${targetLabels[targetName]} (${targetName})`;
+        }),
+      ];
+
+      if (warning) {
+        lines.push("", warning);
+      }
+
+      output.write(`${lines.join("\n")}\n`);
+      renderedLines = lines.length;
+    }
+
+    function finish(targets) {
+      cleanup();
+      output.write("\n");
+      resolve(targets);
+    }
+
+    function onKeypress(_str, key) {
+      if (key.ctrl && key.name === "c") {
+        process.exitCode = 130;
+        finish([]);
+        return;
+      }
+
+      if (key.name === "up") {
+        activeIndex = (activeIndex - 1 + targetNames.length) % targetNames.length;
+        warning = "";
+        render();
+        return;
+      }
+
+      if (key.name === "down") {
+        activeIndex = (activeIndex + 1) % targetNames.length;
+        warning = "";
+        render();
+        return;
+      }
+
+      if (key.name === "space") {
+        const targetName = targetNames[activeIndex];
+        if (selectedTargets.has(targetName)) {
+          selectedTargets.delete(targetName);
+        } else {
+          selectedTargets.add(targetName);
+        }
+        warning = "";
+        render();
+        return;
+      }
+
+      if (key.name === "return") {
+        const targets = targetNames.filter((targetName) =>
+          selectedTargets.has(targetName)
+        );
+        if (targets.length === 0) {
+          warning = "Select at least one target before pressing Enter.";
+          render();
+          return;
+        }
+        finish(targets);
+      }
+    }
+
+    readline.emitKeypressEvents(input);
+    if (input.isTTY) input.setRawMode(true);
+    output.write("\x1b[?25l");
+    input.on("keypress", onKeypress);
+    render();
+  });
+}
+
+async function resolveTarget(target) {
+  const parsedTargets = parseTargets(target);
+  if (parsedTargets) return parsedTargets;
+  if (target) {
+    console.error(
+      `Invalid --target value: ${target}. Use cursor, claude, codex, all, or comma-separated values.`
+    );
+    process.exitCode = 1;
+    return [];
+  }
+
+  if (!process.stdin.isTTY) return targetNames;
+  return selectTargets(getDetectedTargets());
 }
 
 async function init(options) {
@@ -126,7 +243,8 @@ async function init(options) {
   }
 
   const files = ["SKILL.md", "SKILL.zh-CN.md"];
-  const installTargets = expandTargets(await resolveTarget(options.target));
+  const installTargets = await resolveTarget(options.target);
+  if (installTargets.length === 0) return;
 
   for (const installTarget of installTargets) {
     const targetRoot = targetRoots[installTarget];
