@@ -1,16 +1,18 @@
 # xflow
 
-xflow installs command-scoped AI skills for spec-driven workflows.
+[English](./README.en.md)
 
-## Install Into A Project
+xflow 为基于 Spec 的 AI 开发流程安装按命令拆分的技能。
 
-Run this in the project where you want to use xflow:
+## 安装到项目
+
+在需要使用 xflow 的项目中运行：
 
 ```bash
 npx xflow init
 ```
 
-Choose a specific target:
+也可以指定安装目标：
 
 ```bash
 npx xflow init --target cursor
@@ -18,22 +20,22 @@ npx xflow init --target claude
 npx xflow init --target both
 ```
 
-Or overwrite existing skill files without prompts:
+如需跳过确认并覆盖已有技能文件：
 
 ```bash
 npx xflow init --target cursor --force
 ```
 
-## Commands
+## 命令
 
-- `/xflow-start <feature-name>`: start a new feature spec.
-- `/xflow-do <feature-name-or-file>` / `/xflow:do <feature-name-or-file>`: execute the task list in a feature spec.
-- `/xflow-complete <feature-name>`: complete a feature and update its release file.
-- `/xflow-abandon <feature-name>`: abandon a feature and write an abandoned record.
-- `/xflow-learn <topic>`: extract durable project knowledge from current work.
-- `/xflow-record <content>`: directly record content into AI context.
+- `/xflow-start <feature-name>`：创建新的功能 Spec。
+- `/xflow-do <feature-name-or-file>` / `/xflow:do <feature-name-or-file>`：执行功能 Spec 中的任务列表。
+- `/xflow-complete <feature-name>`：完成功能并更新 Release 文件。
+- `/xflow-abandon <feature-name>`：放弃功能并写入放弃记录。
+- `/xflow-learn <topic>`：从当前工作中提取长期项目知识。
+- `/xflow-record <content>`：直接把内容记录到 AI Context。
 
-Each command is installed as a separate skill:
+每个命令都会作为独立技能安装：
 
 - `xflow-start`
 - `xflow-do`
