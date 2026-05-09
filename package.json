@@ -1,6 +1,6 @@
 {
   "name": "@wcpwcp9/xflow",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Install the xflow skill for spec-driven AI workflows.",
   "bin": {
     "xflow": "bin/xflow.js"

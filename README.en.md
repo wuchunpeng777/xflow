@@ -18,10 +18,22 @@ Install xflow in the project where you want to use it:
 npm i @wcpwcp9/xflow
 ```
 
+You can also install xflow globally, so the `xflow` command is available in any project:
+
+```bash
+npm i -g @wcpwcp9/xflow
+```
+
 Then initialize the xflow skills:
 
 ```bash
 npx xflow init
+```
+
+If xflow is installed globally, you can run:
+
+```bash
+xflow init
 ```
 
 Without `--target`, xflow shows an interactive multi-select prompt:

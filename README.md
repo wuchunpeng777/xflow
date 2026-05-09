@@ -18,10 +18,22 @@ xflow 的意图是把一次功能开发拆成清晰阶段：先明确需求，�
 npm i @wcpwcp9/xflow
 ```
 
+也可以全局安装，方便在任意项目中直接使用 `xflow` 命令：
+
+```bash
+npm i -g @wcpwcp9/xflow
+```
+
 然后初始化 xflow 技能：
 
 ```bash
 npx xflow init
+```
+
+如果已全局安装，也可以直接运行：
+
+```bash
+xflow init
 ```
 
 不传 `--target` 时，xflow 会显示可视化多选界面：
