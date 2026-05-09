@@ -12,7 +12,13 @@ xflow 的意图是把一次功能开发拆成清晰阶段：先明确需求，�
 
 ## 安装到项目
 
-在需要使用 xflow 的项目中运行：
+在需要使用 xflow 的项目中安装：
+
+```bash
+npm i @wcpwcp9/xflow
+```
+
+然后初始化 xflow 技能：
 
 ```bash
 npx xflow init

@@ -12,7 +12,13 @@ xflow is designed to split feature work into clear stages: define the request, e
 
 ## Install Into A Project
 
-Run this in the project where you want to use xflow:
+Install xflow in the project where you want to use it:
+
+```bash
+npm i @wcpwcp9/xflow
+```
+
+Then initialize the xflow skills:
 
 ```bash
 npx xflow init
