@@ -69,6 +69,12 @@ npx xflow init --target all
 - `/xflow-learn <topic>`：从当前工作中提取长期项目知识。
 - `/xflow-record <content>`：直接把内容记录到 AI Context。
 
+## AI Context
+
+xflow 将长期项目知识保存到 `.xflow/ai-context/` 目录。入口文件是 `.xflow/ai-context/index.md`，它只保存简短摘要和主题文件说明；具体知识按主题拆到 `project.md`、`tech-stack.md`、`architecture.md`、`quality.md`、`code-standards.md`、`xflow.md` 等文件。
+
+执行任务时，Agent 应先读取 `index.md`，再根据当前 Spec 只读取相关主题文件。这样可以避免每次把所有长期知识都放进上下文，减少 token 使用。
+
 ## Skill 说明
 
 ### `xflow-start`
@@ -105,15 +111,15 @@ npx xflow init --target all
 
 ### `xflow-learn`
 
-`xflow-learn` 用来从当前工作中提取长期项目知识，并写入 xflow AI Context。它关注稳定事实，比如架构约定、目录职责、工具链习惯、团队偏好和踩坑经验。
+`xflow-learn` 用来从当前工作中提取长期项目知识，并写入 `.xflow/ai-context/`。它关注稳定事实，比如架构约定、目录职责、工具链习惯、团队偏好和踩坑经验。
 
 这个命令存在的原因是：很多项目知识不属于某个单独功能，但会影响未来所有任务。把这些知识沉淀下来，可以让之后的 AI 协作更贴近项目真实约定。
 
-达到的效果是：AI Context 会逐步积累项目级知识，后续任务可以复用这些事实，而不需要用户反复解释。
+达到的效果是：AI Context 会按主题逐步积累项目级知识，后续任务可以按需复用相关事实，而不需要用户反复解释。
 
 ### `xflow-record`
 
-`xflow-record` 用来把用户明确给出的内容直接记录到 AI Context。它不会像 `learn` 那样主动提炼当前工作，而是保存用户指定的事实或规则。
+`xflow-record` 用来把用户明确给出的内容直接记录到 `.xflow/ai-context/` 的合适主题文件。它不会像 `learn` 那样主动提炼当前工作，而是保存用户指定的事实或规则。
 
 这个命令存在的原因是：有些知识用户已经表达得很明确，不需要 Agent 再总结判断，直接记录更准确。
 

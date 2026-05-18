@@ -28,7 +28,7 @@ Accept these forms as equivalent:
 
 ## Workflow
 
-1. If `.xflow/ai-context.md` exists, read it before implementation.
+1. If `.xflow/ai-context/index.md` exists, read it first. Use the task spec to decide which durable project knowledge is needed, then read only the relevant topic files.
 2. Read the resolved task spec.
 3. Extract the task list from markdown checkboxes:
    - Incomplete tasks: `- [ ]`, `* [ ]`, or `+ [ ]`.

@@ -21,7 +21,7 @@ Accept these forms as equivalent:
 
 ## Workflow
 
-1. If `.xflow/ai-context.md` exists, read it. If it does not exist, continue and create it only when durable project knowledge must be stored.
+1. If `.xflow/ai-context/index.md` exists, read it first. If the current task needs durable project knowledge, read only the relevant topic files listed in the index.
 2. Ensure `.xflow/tasks/` exists.
 3. Use the exact `<feature-name>` provided in the user's start command as the task spec name and path segment: `.xflow/tasks/<feature-name>.md`.
 4. If a task spec with the same name already exists, stop and ask the user to choose one option:

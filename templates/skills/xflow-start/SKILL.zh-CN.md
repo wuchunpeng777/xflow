@@ -21,7 +21,7 @@ description: 开启一个新的 xflow 功能 Spec。当用户调用 /xflow-start
 
 ## 流程
 
-1. 如果 `.xflow/ai-context.md` 存在，先读取它；如果不存在，继续处理当前任务，只有在需要沉淀长期项目知识时才创建。
+1. 如果 `.xflow/ai-context/index.md` 存在，先读取它；如果当前任务需要长期项目知识，再按索引说明读取相关主题文件。
 2. 确保 `.xflow/tasks/` 存在。
 3. 使用用户 start 命令中给定的原始 `<feature-name>` 作为任务 Spec 名称和路径片段：`.xflow/tasks/<feature-name>.md`。
 4. 如果已经存在同名任务 Spec，停止并提示用户选择：

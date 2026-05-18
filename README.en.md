@@ -69,6 +69,12 @@ If xflow skill files already exist in the target location, installation overwrit
 - `/xflow-learn <topic>`: extract durable project knowledge from current work.
 - `/xflow-record <content>`: directly record content into AI context.
 
+## AI Context
+
+xflow stores durable project knowledge in the `.xflow/ai-context/` directory. The entry file is `.xflow/ai-context/index.md`, which keeps only a short summary and descriptions of topic files; detailed knowledge is split into files such as `project.md`, `tech-stack.md`, `architecture.md`, `quality.md`, `code-standards.md`, and `xflow.md`.
+
+When executing tasks, the agent should read `index.md` first, then read only the topic files relevant to the current spec. This avoids loading all durable knowledge into context every time and reduces token usage.
+
 ## Skill Details
 
 ### `xflow-start`
@@ -105,15 +111,15 @@ The result is an explainable abandoned record instead of a task that simply disa
 
 ### `xflow-learn`
 
-`xflow-learn` extracts durable project knowledge from current work and writes it into xflow AI Context. It focuses on stable facts such as architecture conventions, directory responsibilities, tooling habits, team preferences, and lessons learned.
+`xflow-learn` extracts durable project knowledge from current work and writes it into `.xflow/ai-context/`. It focuses on stable facts such as architecture conventions, directory responsibilities, tooling habits, team preferences, and lessons learned.
 
 This command exists because some knowledge is not tied to one feature but affects future work across the project. Capturing it helps later AI sessions follow the real project conventions without repeated explanation.
 
-The result is a growing project-level context that future tasks can reuse.
+The result is growing topic-based project context that future tasks can reuse selectively.
 
 ### `xflow-record`
 
-`xflow-record` directly records user-provided content into AI Context. Unlike `learn`, it does not infer knowledge from the current work; it stores the explicit fact or rule the user provides.
+`xflow-record` directly records user-provided content into the relevant topic file under `.xflow/ai-context/`. Unlike `learn`, it does not infer knowledge from the current work; it stores the explicit fact or rule the user provides.
 
 This command exists because some knowledge is already precise and should be saved as-is instead of summarized by the agent.
 

@@ -7,7 +7,7 @@ description: Records user-provided content directly into xflow AI context. Use w
 
 ## Purpose
 
-Directly record user-provided content into `.xflow/ai-context.md`.
+Directly record user-provided content into `.xflow/ai-context/`.
 
 Do not pre-generate `.xflow/`. Create directories and files only when this command needs them and they do not already exist.
 
@@ -22,55 +22,50 @@ Accept these forms as equivalent:
 ## Workflow
 
 1. Treat the user-provided content as the source material to persist.
-2. Ensure `.xflow/` exists.
-3. If `.xflow/ai-context.md` exists, read it before editing. If it does not exist, create it from the AI Context Template.
-4. Add or merge the content into the most relevant section of `.xflow/ai-context.md`.
-5. If the content is ambiguous or its target section is unclear, ask focused clarification questions before recording it.
-6. Preserve the user's meaning, but keep the wording concise and reusable.
-7. Do not create or modify task specs or release notes.
+2. Ensure `.xflow/ai-context/` exists.
+3. If `.xflow/ai-context/index.md` exists, read it before editing. If it does not exist, create the directory and index from the AI Context Template.
+4. Add or merge the content into the most relevant topic file, and update `index.md` when its summary or file descriptions need to change.
+5. Do not read the whole AI Context directory to record one item; read `index.md` first, then only the relevant topic files.
+6. If the content is ambiguous or its target topic file is unclear, ask focused clarification questions before recording it.
+7. Preserve the user's meaning, but keep the wording concise and reusable.
+8. Do not create or modify task specs or release notes.
 
 ## AI Context Template
 
 ```markdown
-# AI Context
+# AI Context Index
 
-This file stores durable project knowledge for xflow. Update it with `/xflow:learn` or `/xflow:record` when project-level facts change.
+This directory stores durable project knowledge for xflow. Read this index first, then open only the topic files relevant to the active task.
 
-## Project Overview
+## Files
 
-- Type: TBD
-- Goals: TBD
+- `project.md`: project type, goals, product boundaries, and domain facts.
+- `tech-stack.md`: languages, frameworks, runtimes, package managers, and tools.
+- `architecture.md`: structure, key modules, data flow, and integration notes.
+- `quality.md`: performance, security, compatibility, testing, and release constraints.
+- `code-standards.md`: coding conventions and implementation preferences.
+- `xflow.md`: xflow-specific workflow notes.
 
-## Tech Stack
+## Summary
 
-- Languages: TBD
-- Frameworks: TBD
-- Runtime: TBD
+- Project: TBD
+- Stack: TBD
+- Architecture: TBD
+- Current constraints: TBD
+```
 
-## Architecture Notes
+## Topic File Template
 
-- Structure: TBD
-- Key modules: TBD
+```markdown
+# <Topic>
 
-## Quality Constraints
+## Stable Facts
 
-- Performance: TBD
-- Security: TBD
-- Compatibility: TBD
+- TBD
 
-## Code Standards
+## Conventions
 
-- Keep code scoped to the active task spec.
-- Prefer existing project patterns over new abstractions.
-- Use readable names and small, focused methods.
-- Treat code and Git state as the source of truth.
-
-## xflow Notes
-
-- Active specs live in `.xflow/tasks/`.
-- Completed work is summarized in `.xflow/releases/`.
-- Abandoned work is summarized in `.xflow/history/`.
-- Temporary task details do not belong in this file.
+- TBD
 ```
 
 ## Principles

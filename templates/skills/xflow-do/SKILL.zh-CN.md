@@ -28,7 +28,7 @@ description: 执行 xflow Spec 中的任务列表。当用户调用 /xflow-do、
 
 ## 流程
 
-1. 如果 `.xflow/ai-context.md` 存在，先读取它再开始实现。
+1. 如果 `.xflow/ai-context/index.md` 存在，先读取它；结合任务 Spec 判断需要哪些长期项目知识，再按需读取相关主题文件。
 2. 读取解析到的任务 Spec。
 3. 从 markdown checkbox 中提取任务列表：
    - 未完成任务：`- [ ]`、`* [ ]` 或 `+ [ ]`。

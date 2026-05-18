@@ -7,7 +7,7 @@ description: Extracts durable project knowledge into xflow AI context. Use when 
 
 ## Purpose
 
-Persist stable, reusable project knowledge in `.xflow/ai-context.md`.
+Persist stable, reusable project knowledge in `.xflow/ai-context/`.
 
 Do not pre-generate `.xflow/`. Create directories and files only when this command needs them and they do not already exist.
 
@@ -21,55 +21,50 @@ Accept these forms as equivalent:
 
 ## Workflow
 
-1. If `.xflow/ai-context.md` exists, read it.
+1. If `.xflow/ai-context/index.md` exists, read it first to understand the available context files and their responsibilities.
 2. Extract only stable, reusable project facts from the current work.
 3. If it is unclear whether something is durable project knowledge, ask focused clarification questions before writing it.
-4. Ensure `.xflow/` exists.
-5. Create or update `.xflow/ai-context.md`.
-6. Do not add temporary task details, speculation, or one-off decisions.
+4. Ensure `.xflow/ai-context/` exists.
+5. Create or update the most relevant topic file, and keep `.xflow/ai-context/index.md` in sync.
+6. Do not read the whole AI Context directory to update one category of knowledge; read `index.md` first, then only the relevant topic files.
+7. Do not add temporary task details, speculation, or one-off decisions.
 
 ## AI Context Template
 
 ```markdown
-# AI Context
+# AI Context Index
 
-This file stores durable project knowledge for xflow. Update it with `/xflow:learn` or `/xflow:record` when project-level facts change.
+This directory stores durable project knowledge for xflow. Read this index first, then open only the topic files relevant to the active task.
 
-## Project Overview
+## Files
 
-- Type: TBD
-- Goals: TBD
+- `project.md`: project type, goals, product boundaries, and domain facts.
+- `tech-stack.md`: languages, frameworks, runtimes, package managers, and tools.
+- `architecture.md`: structure, key modules, data flow, and integration notes.
+- `quality.md`: performance, security, compatibility, testing, and release constraints.
+- `code-standards.md`: coding conventions and implementation preferences.
+- `xflow.md`: xflow-specific workflow notes.
 
-## Tech Stack
+## Summary
 
-- Languages: TBD
-- Frameworks: TBD
-- Runtime: TBD
+- Project: TBD
+- Stack: TBD
+- Architecture: TBD
+- Current constraints: TBD
+```
 
-## Architecture Notes
+## Topic File Template
 
-- Structure: TBD
-- Key modules: TBD
+```markdown
+# <Topic>
 
-## Quality Constraints
+## Stable Facts
 
-- Performance: TBD
-- Security: TBD
-- Compatibility: TBD
+- TBD
 
-## Code Standards
+## Conventions
 
-- Keep code scoped to the active task spec.
-- Prefer existing project patterns over new abstractions.
-- Use readable names and small, focused methods.
-- Treat code and Git state as the source of truth.
-
-## xflow Notes
-
-- Active specs live in `.xflow/tasks/`.
-- Completed work is summarized in `.xflow/releases/`.
-- Abandoned work is summarized in `.xflow/history/`.
-- Temporary task details do not belong in this file.
+- TBD
 ```
 
 ## Principles
