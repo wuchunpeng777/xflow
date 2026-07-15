@@ -5,6 +5,10 @@
   "bin": {
     "xflow": "bin/xflow.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wuchunpeng777/xflow"
+  },
   "files": [
     "bin/",
     "templates/skills/"
