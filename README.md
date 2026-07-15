@@ -2,11 +2,11 @@
 
 [English](./README.en.md)
 
-xflow 为基于 Spec 的 AI 开发流程安装按命令拆分的技能。
+xflow 为 AI 开发流程安装按命令拆分的技能，既支持基于 Spec 的实现流程，也支持不依赖 Spec 的事后代码验收。
 
 ## Skill 是什么
 
-xflow 的每个 skill 都是一份面向 AI Agent 的命令说明。安装后，AI 工具可以在用户调用对应命令时读取这份说明，并按固定流程创建 Spec、执行任务、写 Release、沉淀长期知识。
+xflow 的每个 skill 都是一份面向 AI Agent 的命令说明。安装后，AI 工具可以在用户调用对应命令时读取这份说明，并按固定流程创建 Spec、执行任务、验收代码、写 Release、沉淀长期知识。
 
 xflow 的意图是把一次功能开发拆成清晰阶段：先明确需求，再按任务执行，最后留下 Release 记录和可复用的项目知识。这样可以减少上下文丢失，让多轮 AI 协作更稳定，也让项目历史更容易追踪。
 
@@ -64,6 +64,7 @@ npx xflow init --target all
 
 - `/xflow-start <feature-name>`：创建新的功能 Spec。
 - `/xflow-do <feature-name-or-file>` / `/xflow:do <feature-name-or-file>`：执行功能 Spec 中的任务列表。
+- `/xflow-review <file-or-directory>...` / `/xflow:review <file-or-directory>...`：按照业务需求验收指定代码，不要求存在 Spec。
 - `/xflow-complete <feature-name>`：完成功能并更新 Release 文件。
 - `/xflow-abandon <feature-name>`：放弃功能并写入放弃记录。
 - `/xflow-learn <topic>`：从当前工作中提取长期项目知识。
@@ -92,6 +93,14 @@ xflow 将长期项目知识保存到 `.xflow/ai-context/` 目录。入口文件�
 这个命令存在的原因是：执行阶段需要避免跳步和遗漏。让 Agent 以 Spec 的任务列表为准，可以让改动范围更明确，也让每一步完成条件更清楚。
 
 达到的效果是：功能实现和 Spec 状态同步推进，用户可以随时看到还剩哪些任务、哪些已经完成。
+
+### `xflow-review`
+
+`xflow-review` 用来在 AI 生成代码后进行独立的宏观验收，建议在新的 Agent 会话中运行。它不要求功能经过 xflow 流程，也不要求存在 Spec；用户只需指定文件或目录，并通过简短访谈确认业务场景和验收标准。
+
+这个命令存在的原因是：生成大量代码很快，但逐行检查实现成本很高。Review 会把业务要求逐项映射到代码和验证证据，生成聚焦的架构图、期望与实际业务流程图，并按风险列出最值得人工查看的位置。
+
+达到的效果是：用户可以先从业务符合性、关键数据流、架构边界和风险证据把控实现，只在少量关键代码处下钻。Review 默认只出报告，不修改代码，也不阻止其他 xflow 命令。
 
 ### `xflow-complete`
 

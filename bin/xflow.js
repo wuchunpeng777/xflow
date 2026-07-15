@@ -13,6 +13,7 @@ const skillNames = [
   "xflow-abandon",
   "xflow-learn",
   "xflow-record",
+  "xflow-review",
 ];
 const targetRoots = {
   cursor: path.join(process.cwd(), ".cursor", "skills"),
@@ -36,6 +37,10 @@ Usage:
 Commands:
   init     Install xflow command skills into the current project.
   help     Show this help message.
+
+Installed skill commands:
+  /xflow-start, /xflow-do, /xflow-review, /xflow-complete,
+  /xflow-abandon, /xflow-learn, /xflow-record
 
 Options:
   --target  Install target(s). Use comma-separated values for multiple targets.

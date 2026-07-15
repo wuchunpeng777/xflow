@@ -1,7 +1,7 @@
 {
   "name": "@wcpwcp9/xflow",
-  "version": "0.1.2",
-  "description": "Install the xflow skill for spec-driven AI workflows.",
+  "version": "0.1.3",
+  "description": "Install xflow skills for spec-driven AI workflows and business-first code review.",
   "bin": {
     "xflow": "bin/xflow.js"
   },
@@ -9,6 +9,9 @@
     "bin/",
     "templates/skills/"
   ],
+  "scripts": {
+    "test": "node --test"
+  },
   "keywords": [
     "cursor",
     "codex",
@@ -17,7 +20,8 @@
     "skill",
     "ai",
     "workflow",
-    "spec"
+    "spec",
+    "code-review"
   ],
   "license": "MIT",
   "engines": {

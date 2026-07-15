@@ -2,11 +2,11 @@
 
 [简体中文](./README.md)
 
-xflow installs command-scoped AI skills for spec-driven workflows.
+xflow installs command-scoped AI skills for spec-driven implementation and standalone post-implementation review.
 
 ## What A Skill Is
 
-Each xflow skill is a command guide for an AI agent. After installation, your AI tool can read the matching skill when you invoke a command, then follow a stable workflow for creating specs, executing tasks, writing release notes, and capturing durable project knowledge.
+Each xflow skill is a command guide for an AI agent. After installation, your AI tool can read the matching skill when you invoke a command, then follow a stable workflow for creating specs, executing tasks, reviewing code, writing release notes, and capturing durable project knowledge.
 
 xflow is designed to split feature work into clear stages: define the request, execute the task list, then keep release notes and reusable project knowledge. This reduces lost context during long AI sessions and makes project history easier to trace.
 
@@ -64,6 +64,7 @@ If xflow skill files already exist in the target location, installation overwrit
 
 - `/xflow-start <feature-name>`: start a new feature spec.
 - `/xflow-do <feature-name-or-file>` / `/xflow:do <feature-name-or-file>`: execute the task list in a feature spec.
+- `/xflow-review <file-or-directory>...` / `/xflow:review <file-or-directory>...`: review selected code against business requirements without requiring a spec.
 - `/xflow-complete <feature-name>`: complete a feature and update its release file.
 - `/xflow-abandon <feature-name>`: abandon a feature and write an abandoned record.
 - `/xflow-learn <topic>`: extract durable project knowledge from current work.
@@ -92,6 +93,14 @@ The result is a trackable feature context that `/xflow-do` and `/xflow-complete`
 This command exists to keep implementation from skipping steps or drifting away from the agreed plan. The spec task list keeps scope and completion criteria visible.
 
 The result is implementation progress that stays synchronized with the spec, so users can see what is done and what remains.
+
+### `xflow-review`
+
+`xflow-review` performs an independent, high-level review after AI-generated implementation and is best run in a fresh agent conversation. It does not require the feature to have used xflow or to have a spec. The user selects files or directories and confirms business scenarios and acceptance criteria through a short interview.
+
+This command exists because generating a large amount of code is fast while reviewing it line by line is expensive. The review maps each business criterion to code and verification evidence, creates focused architecture and expected-versus-actual flow diagrams, and identifies the code locations most worth human attention.
+
+The result is a business-first view of compliance, data flow, architecture boundaries, and risk. Review reports are advisory by default: they do not modify code or block other xflow commands.
 
 ### `xflow-complete`
 
